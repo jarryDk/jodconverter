@@ -73,6 +73,7 @@ public class OfficeUtils {
             return findOfficeHome(
                 programFiles + File.separator + "OpenOffice 4",
                 programFiles + File.separator + "OpenOffice.org 3",
+                programFiles + File.separator + "LibreOffice 4",
                 programFiles + File.separator + "LibreOffice 3"
             );
         } else if (PlatformUtils.isMac()) {
@@ -85,8 +86,13 @@ public class OfficeUtils {
             return findOfficeHome(
                 "/opt/openoffice4",
                 "/opt/openoffice.org3",
-                "/opt/libreoffice",
+                "/usr/lib/openoffice.org3",
+                "/usr/lib64/openoffice.org3",
                 "/usr/lib/openoffice",
+                "/opt/libreoffice4.0",
+                "/opt/libreoffice3.6",
+                "/opt/libreoffice",
+                "/usr/lib64/openoffice",
                 "/usr/lib/libreoffice"
             );
         }
