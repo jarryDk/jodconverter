@@ -71,6 +71,7 @@ public class OfficeUtils {
                 programFiles = System.getenv("ProgramFiles");
             }
             return findOfficeHome(
+                programFiles + File.separator + "OpenOffice 4",
                 programFiles + File.separator + "OpenOffice.org 3",
                 programFiles + File.separator + "LibreOffice 3"
             );
@@ -82,6 +83,7 @@ public class OfficeUtils {
         } else {
             // Linux or other *nix variants
             return findOfficeHome(
+                "/opt/openoffice4",
                 "/opt/openoffice.org3",
                 "/opt/libreoffice",
                 "/usr/lib/openoffice",
