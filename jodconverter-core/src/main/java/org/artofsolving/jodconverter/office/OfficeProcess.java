@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
+import org.artofsolving.jodconverter.process.LinuxProcessManager;
 import org.artofsolving.jodconverter.process.ProcessManager;
 import org.artofsolving.jodconverter.process.ProcessQuery;
 import org.artofsolving.jodconverter.util.PlatformUtils;
@@ -202,13 +203,17 @@ class OfficeProcess {
 
     public int forciblyTerminate(long retryInterval, long retryTimeout) throws IOException, RetryTimeoutException {
         logger.info(String.format("trying to forcibly terminate process: '" + unoUrl + "'" + (pid != PID_UNKNOWN ? " (pid " + pid  + ")" : "")));
-        if (this.pid == PID_UNKNOWN) {
-            long foundPid = this.processManager.findPid(new ProcessQuery("soffice.*", this.unoUrl.getAcceptString()));
-            if (foundPid != PID_UNKNOWN) {
-                this.processManager.kill(this.process, foundPid);
-            }
+        if (processManager instanceof LinuxProcessManager) {
+        	if (this.pid == PID_UNKNOWN) {
+        		long foundPid = this.processManager.findPid(new ProcessQuery("soffice.*", this.unoUrl.getAcceptString()));
+            		if (foundPid != PID_UNKNOWN) {
+                		this.processManager.kill(this.process, foundPid);
+            		}
+        	} else {
+            		this.processManager.kill(this.process, this.pid);
+        	}	
         } else {
-            this.processManager.kill(this.process, this.pid);
+        	this.processManager.kill(this.process, this.pid);
         }
         return getExitCode(retryInterval, retryTimeout);
     }
